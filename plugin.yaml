@@ -9,10 +9,10 @@ description: |-
 platformCommand:
   - os: linux
     arch: amd64
-    command: "dist/darwin/bin/diff-releases"
+    command: "darwin/bin/diff-releases"
   - os: darwin
     arch: amd64
-    command: "dist/darwin/bin/diff-releases"
+    command: "darwin/bin/diff-releases"
   - os: windows
     arch: amd64
-    command: "dist\\windows\\bin\\diff-releases.exe"
+    command: "windows\\bin\\diff-releases.exe"
