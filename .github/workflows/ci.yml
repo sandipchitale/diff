@@ -33,6 +33,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: diff-releases_${{ github.ref_name }}.tar.gz
+        path: diff-releases_${{ github.ref_name }}.tar.gz
   release:
     name: Create Release
     needs: build
