@@ -136,7 +136,7 @@ comma separated (no space before or after commas) set of some of these options h
                         helmGetAllJSON1.hooks.forEach((hook: any) => {
                             contentL += `\n# Source: ${hook.path}\n${hook.manifest}`;
                         });
-                        contentR = `# hooks for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n\n${contentR.split('\\n').join('\n')}`;
+                        contentL = `# hooks for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n\n${contentL.split('\\n').join('\n')}`;
                         helmGetAllJSON1.hooks.forEach((hook: any) => {
                             contentR += `\n# Source: ${hook.path}\n${hook.manifest}`;
                         });
