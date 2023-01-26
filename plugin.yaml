@@ -1,0 +1,18 @@
+name: "diff-releases"
+version: 0.0.1
+usage: "helm get templates "
+description: |-
+  diff-releases WHAT [--code] --release1 RELEASE1 --revision1 R1 [--namespace1 NAMESPACE1] --release2 RELEASE2 --revision2 R2 [--namespace2 NAMESPACE2]
+  where WHAT is:
+  comma separated (no space before or after commas) set of some of these options all, hooks, manifest, notes, values, templates
+  --code option specifies to use VSCode to show the diff
+platformCommand:
+  - os: linux
+    arch: amd64
+    command: "dist/darwin/bin/diff"
+  - os: darwin
+    arch: amd64
+    command: "dist/darwin/bin/diff"
+  - os: windows
+    arch: amd64
+    command: "dist\\windows\\bin\\diff.exe"
