@@ -28,7 +28,7 @@ jobs:
     - run: npm run pkg --if-present
     - name: Create plugin archive
       id: plugin_archive
-      run: cd dist && /bin/tar -cvzf diff_${{ github.ref_name }}.tar.gz .
+      run: cd dist && /bin/tar -cvzf ../diff_${{ github.ref_name }}.tar.gz .
     - name: Upload archives
       uses: actions/upload-artifact@v3
       with:
