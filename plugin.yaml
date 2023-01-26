@@ -9,10 +9,7 @@ description: |-
 platformCommand:
   - os: linux
     arch: amd64
-    command: "darwin/bin/diff-releases"
-  - os: darwin
-    arch: amd64
-    command: "darwin/bin/diff-releases"
+    command: "diff-releases-linux"
   - os: windows
     arch: amd64
-    command: "windows\\bin\\diff-releases.exe"
+    command: "diff-releases.exe"
