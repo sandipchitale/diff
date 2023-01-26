@@ -1,0 +1,51 @@
+{
+  "name": "diff-releases",
+  "version": "0.0.3",
+  "description": "Helm plugin to run helm diff-releases command.",
+  "license": "SEE LICENSE IN LICENCE",
+  "main": "out/main.js",
+  "bin": "out/main.js",
+  "scripts": {
+    "start": "node out/main.js",
+    "start-debug": "node --inspect-brk out/main.js",
+    "pkg-win": "npx pkg -t node16-win-x64 --out-path diff-releases .",
+    "pkg-linux": "npx pkg -t node16-linux-x64 --out-path diff-releases .",
+    "pkg": "npx tsc && npm run pkg-win && npm run pkg-linux",
+    "postpkg": "shx cp plugin.yaml diff-releases && shx cp LICENSE diff-releases",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sandip Chitale <sandipchitale@gmail.com>",
+  "maintainers": [
+    "Sandip Chitale <sandipchitale@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sandipchitale/diff.git"
+  },
+  "keywords": [
+    "kubectl",
+    "plugin",
+    "helm",
+    "diff WHAT [--code] --release1 RELEASE1 --revision1 R1 [--namespace1 NAMESPACE1] --release2 RELEASE2 --revision2 R2 [--namespace2 NAMESPACE2]"
+  ],
+  "devDependencies": {
+    "@tsconfig/node18": "^1.0.1",
+    "@types/diff": "^5.0.2",
+    "@types/minimist": "^1.2.2",
+    "@types/node": "^18.11.18",
+    "pkg": "^5.8.0",
+    "shx": "^0.3.4",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "diff": "^5.1.0",
+    "json-to-pretty-yaml": "^1.2.2",
+    "minimist": "^1.2.7"
+  },
+  "pkg": {
+    "targets": [
+      "node18-win-x64"
+    ],
+    "outputPath": "bin"
+  }
+}
