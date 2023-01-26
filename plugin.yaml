@@ -9,7 +9,7 @@ description: |-
 platformCommand:
   - os: linux
     arch: amd64
-    command: "diff-releases-linux"
+    command: "$HELM_PLUGIN_DIR/$HELM_PLUGIN_NAME/diff-releases-linux"
   - os: windows
     arch: amd64
-    command: "diff-releases.exe"
+    command: "$HELM_PLUGIN_DIR\\$HELM_PLUGIN_NAME\\diff-releases.exe"
