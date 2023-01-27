@@ -1,6 +1,6 @@
 {
   "name": "diff-releases",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Helm plugin to run helm diff-releases command.",
   "license": "SEE LICENSE IN LICENCE",
   "main": "out/main.js",

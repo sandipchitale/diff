@@ -16,6 +16,12 @@ comma separated (no space before or after commas) set of some of these options h
 
 --code option specifies to use VSCode to show the diff
 
+NOTE:
+
+--namespaces to mean --namespace1 and --namespace2
+--releases   to mean --release1   and --release2
+--revisions  to mean -revision1   and --revision2
+
 ## Building
 
 ```

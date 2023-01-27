@@ -12,6 +12,8 @@ const YAML = require('json-to-pretty-yaml');
 
 (async () => {
     const diffUsage = `
+diff-releases (v0.0.18)
+
 The Kubernetes package manager custome commands:
 
 diff WHAT [--code] --release1 RELEASE1 --revision1 R1 [--namespace1 NAMESPACE1] --release2 RELEASE2 --revision2 R2 [--namespace2 NAMESPACE2]
@@ -21,6 +23,12 @@ where WHAT is:
 comma separated (no space before or after commas) set of some of these options hooks, manifest, notes, values, templates
 
 --code option specifies to use VSCode to show the diff
+
+NOTE:
+
+--namespaces to mean --namespace1 and --namespace2
+--releases   to mean --release1   and --release2
+--revisions  to mean -revision1   and --revision2
 `;
 
     let rest = process.argv.slice(2);
@@ -32,14 +40,14 @@ comma separated (no space before or after commas) set of some of these options h
         // one of hooks, manifest, notes, values, templates
         const diffWhats = optsAndCommands._[0].trim().split(',').filter((s: string) => s.length > 0);
 
-        let namespace1 = optsAndCommands.namespace1 || optsAndCommands['namespace'];
-        let namespace2 = optsAndCommands.namespace2 || optsAndCommands['namespace'];;
+        let namespace1 = optsAndCommands.namespace1 || optsAndCommands.namespaces;
+        let namespace2 = optsAndCommands.namespace2 || optsAndCommands.namespaces;
 
-        const release1 = optsAndCommands.release1 || optsAndCommands.release;
-        const release2 = optsAndCommands.release2 || optsAndCommands.release;
+        const release1 = optsAndCommands.release1 || optsAndCommands.releases;
+        const release2 = optsAndCommands.release2 || optsAndCommands.releases;
 
         // revsion not specified, get the latest revision
-        let revision1 = optsAndCommands.revision1 || optsAndCommands.revision; // start with default
+        let revision1 = optsAndCommands.revision1 || optsAndCommands.revisions; // start with default
         if (!revision1) {
             const helmList = child_process.execSync(`helm list ${namespace1 ? `--namespace ${namespace1}` : ''} -o json`, {
                 encoding: 'utf8'
@@ -59,7 +67,7 @@ comma separated (no space before or after commas) set of some of these options h
         }
 
         // revsion not specified, get the latest revision
-        let revision2 = optsAndCommands.revision2 || optsAndCommands.revision; // start with default
+        let revision2 = optsAndCommands.revision2 || optsAndCommands.revisions; // start with default
         if (!revision2) {
             const helmList = child_process.execSync(`helm list ${namespace2 ? `--namespace ${namespace2}` : ''} -o json`, {
                 encoding: 'utf8'
