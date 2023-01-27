@@ -123,91 +123,80 @@ comma separated (no space before or after commas) set of some of these options h
             }
 
             if (helmGetAllJSON1 && helmGetAllJSON2) {
-                diffWhats.forEach(diffWhat => {
-                    let filePathL = path.join(os.tmpdir(), `L-diff-${diffWhat}-${namespace1 ? `${namespace1}-` : ''}${release1}-${revision1}`);
-                    let filePathR = path.join(os.tmpdir(), `R-diff-${diffWhat}-${namespace2 ? `${namespace2}-` : ''}${release2}-${revision2}`);
-                    let contentL = '';
-                    let contentR = '';
 
-                    switch (diffWhat) {
-                    case 'hooks':
-                        filePathL += '.yaml';
-                        filePathR += '.yaml';
-                        helmGetAllJSON1.hooks.forEach((hook: any) => {
-                            contentL += `\n# Source: ${hook.path}\n${hook.manifest}`;
-                        });
-                        contentL = `# hooks for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n\n${contentL.split('\\n').join('\n')}`;
-                        helmGetAllJSON1.hooks.forEach((hook: any) => {
-                            contentR += `\n# Source: ${hook.path}\n${hook.manifest}`;
-                        });
-                        contentR = `# hooks for release2: ${release2} revision2: ${revision2} ${namespace2 ? ` in namespace2 ${namespace2}` : ' in current namespace'}\n\n${contentR.split('\\n').join('\n')}`;
-                        break;
-                    case 'manifest':
-                        filePathL += '.yaml';
-                        filePathR += '.yaml';
-                        contentL = `# manifest for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n\n${helmGetAllJSON1.manifest.split('\\n').join('\n')}`;
-                        contentR = `# manifest for release2: ${release2} revision2: ${revision2} ${namespace2 ? ` in namespace2 ${namespace2}` : ' in current namespace'}\n\n${helmGetAllJSON2.manifest.split('\\n').join('\n')}`;
-                        break;
-                    case 'notes':
-                        filePathL += '.txt';
-                        filePathR += '.txt';
-                        contentL = `# notes for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n${helmGetAllJSON1.info.notes.split('\\n').join('\n')}`;
-                        contentR = `# notes for release2: ${release2} revision2: ${revision2} ${namespace2 ? ` in namespace2 ${namespace2}` : ' in current namespace'}\n${helmGetAllJSON2.info.notes.split('\\n').join('\n')}`;
-                        break;
-                    case 'values':
-                        filePathL += '.yaml';
-                        filePathR += '.yaml';
-                        contentL += `# values for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n---\n${YAML.stringify(helmGetAllJSON1.chart.values)}`;
-                        contentR += `# values for release2: ${release2} revision2: ${revision2} ${namespace2 ? ` in namespace2 ${namespace2}` : ' in current namespace'}\n---\n${YAML.stringify(helmGetAllJSON2.chart.values)}`;
-                        break;
-                    case 'templates':
-                        filePathL += '.yaml';
-                        filePathR += '.yaml';
-                        contentL = '';
-                        helmGetAllJSON1.chart.templates.forEach((template: any) => {
-                            const templateString = Buffer.from(template.data, 'base64').toString('utf-8');
-                            contentL += `\n---\n# Template: ${template.name}\n${templateString}`;
-                        });
-                        contentL = contentL.split('\\n').join('\n');
-                        contentL = `# templates for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n${contentL}`;
+                let contentL = '';
+                let contentR = '';
 
-                        contentR = '';
-                        helmGetAllJSON2.chart.templates.forEach((template: any) => {
-                            const templateString = Buffer.from(template.data, 'base64').toString('utf-8');
-                            contentR += `\n---\n# Template: ${template.name}\n${templateString}`;
-                        });
-                        contentR = contentR.split('\\n').join('\n');
-                        contentR = `# templates for release2: ${release2} revision2: ${revision2} ${namespace2 ? ` in namespace2 ${namespace2}` : ' in current namespace'}\n${contentR}`;
-                        break;
-                    }
+                if (diffWhats.includes('all') || diffWhats.includes('hooks')) {
+                    contentL = '';
+                    contentR = '';
+                    helmGetAllJSON1.hooks.forEach((hook: any) => {
+                        contentL += `\n# Source: ${hook.path}\n${hook.manifest}`;
+                    });
+                    contentL = `# hooks for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n\n${contentL.split('\\n').join('\n')}`;
+                    helmGetAllJSON1.hooks.forEach((hook: any) => {
+                        contentR += `\n# Source: ${hook.path}\n${hook.manifest}`;
+                    });
+                    contentR = `# hooks for release2: ${release2} revision2: ${revision2} ${namespace2 ? ` in namespace2 ${namespace2}` : ' in current namespace'}\n\n${contentR.split('\\n').join('\n')}`;
+                    doDiff(code, 'hooks', 'yaml', contentL, contentR);
+                }
+                if (diffWhats.includes('all') || diffWhats.includes('manifest')) {
+                    contentL = `# manifest for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n\n${helmGetAllJSON1.manifest.split('\\n').join('\n')}`;
+                    contentR = `# manifest for release2: ${release2} revision2: ${revision2} ${namespace2 ? ` in namespace2 ${namespace2}` : ' in current namespace'}\n\n${helmGetAllJSON2.manifest.split('\\n').join('\n')}`;
+                    doDiff(code, 'manifest', 'yaml', contentL, contentR);
+                }
+                if (diffWhats.includes('all') || diffWhats.includes('notes')) {
+                    // filePathL += '.txt';
+                    // filePathR += '.txt';
+                    contentL = `# notes for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n${helmGetAllJSON1.info.notes.split('\\n').join('\n')}`;
+                    contentR = `# notes for release2: ${release2} revision2: ${revision2} ${namespace2 ? ` in namespace2 ${namespace2}` : ' in current namespace'}\n${helmGetAllJSON2.info.notes.split('\\n').join('\n')}`;
+                    doDiff(code, 'notes', 'txt', contentL, contentR);
 
-                    if (code) {
-                        codeDiff(
-                            filePathL,
-                            contentL,
-                            filePathR,
-                            contentR
-                        );
-                    } else {
-                        console.info(diff.createTwoFilesPatch('L', 'R',
-                            contentL,
-                            contentR,
-                            filePathL,
-                            filePathR));
-                    }
-                });
+                }
+                if (diffWhats.includes('all') || diffWhats.includes('values')) {
+                    contentL += `# values for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n---\n${YAML.stringify(helmGetAllJSON1.chart.values)}`;
+                    contentR += `# values for release2: ${release2} revision2: ${revision2} ${namespace2 ? ` in namespace2 ${namespace2}` : ' in current namespace'}\n---\n${YAML.stringify(helmGetAllJSON2.chart.values)}`;
+                    doDiff(code, 'values', 'yaml', contentL, contentR);
+
+                }
+                if (diffWhats.includes('all') || diffWhats.includes('templates')) {
+                    contentL = '';
+                    helmGetAllJSON1.chart.templates.forEach((template: any) => {
+                        const templateString = Buffer.from(template.data, 'base64').toString('utf-8');
+                        contentL += `\n---\n# Template: ${template.name}\n${templateString}`;
+                    });
+                    contentL = contentL.split('\\n').join('\n');
+                    contentL = `# templates for release1: ${release1} revision1: ${revision1} ${namespace1 ? ` in namespace1 ${namespace1}` : ' in current namespace'}\n${contentL}`;
+
+                    contentR = '';
+                    helmGetAllJSON2.chart.templates.forEach((template: any) => {
+                        const templateString = Buffer.from(template.data, 'base64').toString('utf-8');
+                        contentR += `\n---\n# Template: ${template.name}\n${templateString}`;
+                    });
+                    contentR = contentR.split('\\n').join('\n');
+                    contentR = `# templates for release2: ${release2} revision2: ${revision2} ${namespace2 ? ` in namespace2 ${namespace2}` : ' in current namespace'}\n${contentR}`;
+                    doDiff(code, 'templates', 'yaml', contentL, contentR);
+                }
             }
         } catch (e) {
             console.error(e);
             return;
         }
 
-        function codeDiff(filePathL: string, contentL: string, filePathR: string, contentR: string) {
+        function doDiff(code: boolean, diffWhat: string, ext: string, contentL: string, contentR: string) {
+            let filePathL = path.join(os.tmpdir(), `L-diff-${diffWhat}-${namespace1 ? `${namespace1}-` : ''}${release1}-${revision1}.${ext}`);
+            let filePathR = path.join(os.tmpdir(), `R-diff-${diffWhat}-${namespace2 ? `${namespace2}-` : ''}${release2}-${revision2}.${ext}`);
+            if (code) {
+                codeDiff(contentL, contentR, filePathL, filePathR);
+            } else {
+                console.info(diff.createTwoFilesPatch('L', 'R', contentL, contentR, filePathL, filePathR));
+            }
+        }
+
+        function codeDiff(contentL: string, contentR: string, filePathL: string, filePathR: string) {
             fs.writeFileSync(filePathL, contentL);
             fs.writeFileSync(filePathR, contentR);
-            child_process.execSync(`code --diff ${filePathL} ${filePathR}`, {
-                encoding: 'utf8'
-            });
+            child_process.execSync(`code --diff ${filePathL} ${filePathR}`, { encoding: 'utf8' });
         }
     } else {
         console.info(diffUsage);
