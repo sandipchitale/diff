@@ -98,7 +98,7 @@ comma separated (no space before or after commas) set of some of these options h
                     return;
                 }
             } else {
-                console.error(`Could not find secret ${secretName1}`);
+                console.error(`Could not find secret ${secretName1} in namespace ${namespace1}`);
                 return;
             }
                                                                                                  //
@@ -118,7 +118,7 @@ comma separated (no space before or after commas) set of some of these options h
                     return;
                 }
             } else {
-                console.error(`Could not find secret ${secretName2}`);
+                console.error(`Could not find secret ${secretName2} in namespace ${namespace2}`);
                 return;
             }
 
