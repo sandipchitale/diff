@@ -25,7 +25,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run pkg --if-present
+    - run: npx tsc
+    - run: npm run pkg
     - name: Create plugin archive
       id: plugin_archive
       run: /bin/tar -cvzf diff-releases_${{ github.ref_name }}.tar.gz diff-releases

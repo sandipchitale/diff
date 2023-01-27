@@ -35,6 +35,9 @@ comma separated (no space before or after commas) set of some of these options h
         const namespace1 = optsAndCommands.namespace1 || optsAndCommands.namespace;
         const namespace2 = optsAndCommands.namespace2 || optsAndCommands.namespace;
 
+        console.log(`namespace1: ${namespace1}`);
+        console.log(`namespace2: ${namespace2}`);
+
         const release1 = optsAndCommands.release1 || optsAndCommands.release;
         const release2 = optsAndCommands.release2 || optsAndCommands.release;
 
