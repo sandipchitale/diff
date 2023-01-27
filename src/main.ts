@@ -32,11 +32,8 @@ comma separated (no space before or after commas) set of some of these options h
         // one of hooks, manifest, notes, values, templates
         const diffWhats = optsAndCommands._[0].trim().split(',').filter((s: string) => s.length > 0);
 
-        const namespace1 = optsAndCommands.namespace1 || optsAndCommands.namespace;
-        const namespace2 = optsAndCommands.namespace2 || optsAndCommands.namespace;
-
-        console.log(`namespace1: ${namespace1}`);
-        console.log(`namespace2: ${namespace2}`);
+        let namespace1 = optsAndCommands.namespace1 || optsAndCommands['namespace'];
+        let namespace2 = optsAndCommands.namespace2 || optsAndCommands['namespace'];;
 
         const release1 = optsAndCommands.release1 || optsAndCommands.release;
         const release2 = optsAndCommands.release2 || optsAndCommands.release;
