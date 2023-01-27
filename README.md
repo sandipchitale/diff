@@ -1,3 +1,5 @@
+[![CI and release](https://github.com/sandipchitale/diff/actions/workflows/ci.yml/badge.svg)](https://github.com/sandipchitale/diff/actions/workflows/ci.yml)
+
 # Helm plugin - diff-releases
 
 This ```helm``` plugin supports the following custom ```helm``` command.
