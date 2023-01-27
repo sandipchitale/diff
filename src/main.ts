@@ -41,7 +41,7 @@ comma separated (no space before or after commas) set of some of these options h
         // revsion not specified, get the latest revision
         let revision1 = optsAndCommands.revision1 || optsAndCommands.revision; // start with default
         if (!revision1) {
-            const helmList = child_process.execSync(`helm list ${namespace1 ? `-n ${namespace1}` : ''} -o json`, {
+            const helmList = child_process.execSync(`helm list ${namespace1 ? `--namespace ${namespace1}` : ''} -o json`, {
                 encoding: 'utf8'
             });
             try {
@@ -61,7 +61,7 @@ comma separated (no space before or after commas) set of some of these options h
         // revsion not specified, get the latest revision
         let revision2 = optsAndCommands.revision2 || optsAndCommands.revision; // start with default
         if (!revision2) {
-            const helmList = child_process.execSync(`helm list ${namespace2 ? `-n ${namespace2}` : ''} -o json`, {
+            const helmList = child_process.execSync(`helm list ${namespace2 ? `--namespace ${namespace2}` : ''} -o json`, {
                 encoding: 'utf8'
             });
             try {
@@ -83,7 +83,7 @@ comma separated (no space before or after commas) set of some of these options h
 
         try {
             const secretName1 = `sh.helm.release.v1.${release1}.v${revision1}`;
-            const secretBuffer1 = child_process.execSync(`kubectl get secret ${secretName1} -o go-template="{{.data.release | base64decode }}" ${namespace1 ? `-n ${namespace1}` : ''}`, {
+            const secretBuffer1 = child_process.execSync(`kubectl get secret ${secretName1} ${namespace1 ? `--namespace ${namespace1}` : ''} -o go-template="{{.data.release | base64decode }}"`, {
                 encoding: 'utf8'
             });
             if (secretBuffer1) {
@@ -103,7 +103,7 @@ comma separated (no space before or after commas) set of some of these options h
             }
                                                                                                  //
             const secretName2 = `sh.helm.release.v1.${release2}.v${revision2}`;
-            const secretBuffer2 = child_process.execSync(`kubectl get secret ${secretName2} -o go-template="{{.data.release | base64decode }}" ${namespace2 ? `-n ${namespace2}` : ''}`, {
+            const secretBuffer2 = child_process.execSync(`kubectl get secret ${secretName2} ${namespace2 ? `--namespace ${namespace2}` : ''} -o go-template="{{.data.release | base64decode }}"`, {
                 encoding: 'utf8'
             });
             if (secretBuffer2) {
