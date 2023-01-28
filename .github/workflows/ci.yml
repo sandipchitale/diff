@@ -31,6 +31,7 @@ jobs:
       run: cd helm-diff-releases-windows-amd64 && /bin/tar -cvzf ../helm-diff-releases-windows-amd64.tar.gz .
     - name: Create linux archive
       run: cd helm-diff-releases-linux-amd64 && /bin/tar -cvzf ../helm-diff-releases-linux-amd64.tar.gz .
+    - name: Upload windows archives
       uses: actions/upload-artifact@v3
       with:
         name: helm-diff-releases-windows-amd64.tar.gz
