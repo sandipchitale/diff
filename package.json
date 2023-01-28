@@ -1,6 +1,6 @@
 {
   "name": "diff-releases",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "Helm plugin to run helm diff-releases command.",
   "license": "SEE LICENSE IN LICENCE",
   "main": "out/main.js",
@@ -8,10 +8,10 @@
   "scripts": {
     "start": "node out/main.js",
     "start-debug": "node --inspect-brk out/main.js",
-    "pkg-windows": "npx pkg -t node16-win-x64 --out-path helm-diff-releases-windows-amd64\\diff-releases\\bin .",
-    "pkg-linux": "npx pkg -t node16-linux-x64 --out-path helm-diff-releases-linux-amd64\\diff-releases\\bin .",
+    "pkg-windows": "npx pkg -t node16-win-x64 --out-path helm-diff-releases-windows-amd64/diff-releases/bin .",
+    "pkg-linux": "npx pkg -t node16-linux-x64 --out-path helm-diff-releases-linux-amd64/diff-releases/bin .",
     "pkg": "npx tsc && npm run pkg-windows && npm run pkg-linux",
-    "postpkg": "shx cp plugin.yaml LICENSE README.md helm-diff-releases-windows-amd64\\diff-releases && shx cp plugin.yaml LICENSE README.md helm-diff-releases-linux-amd64\\diff-releases",
+    "postpkg": "shx mkdir -p helm-diff-releases-windows-amd64/diff-releases && shx mkdir -p helm-diff-releases-linux-amd64/diff-releases && shx cp plugin.yaml LICENSE README.md helm-diff-releases-windows-amd64/diff-releases && shx cp plugin.yaml LICENSE README.md helm-diff-releases-linux-amd64/diff-releases",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sandip Chitale <sandipchitale@gmail.com>",
