@@ -1,4 +1,5 @@
-bin/
 out/
 node_modules/
 LOCALNOTES
+helm-diff-releases-linux-amd64/
+helm-diff-releases-windows-amd64/
