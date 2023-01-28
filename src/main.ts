@@ -12,7 +12,7 @@ const YAML = require('json-to-pretty-yaml');
 
 (async () => {
     const diffUsage = `
-diff-releases (v0.0.22)
+diff-releases (v0.0.23)
 
 The Kubernetes package manager custome commands:
 
