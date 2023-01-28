@@ -1,5 +1,5 @@
 name: "diff-releases"
-version: 0.0.24
+version: 0.0.25
 usage: "helm get templates "
 description: |-
   diff-releases WHAT [--code] --release1 RELEASE1 --revision1 R1 [--namespace1 NAMESPACE1] --release2 RELEASE2 --revision2 R2 [--namespace2 NAMESPACE2]

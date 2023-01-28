@@ -28,10 +28,9 @@ jobs:
     - run: npx tsc
     - run: npm run pkg
     - name: Create windows archive
-      run: /bin/tar --strip=1 --show-transformed-names -cvzf helm-diff-releases-windows-amd64.tar.gz helm-diff-releases-windows-amd64
+      run: cd helm-diff-releases-windows-amd64 && /bin/tar -cvzf ../helm-diff-releases-windows-amd64.tar.gz .
     - name: Create linux archive
-      run: /bin/tar --strip=1 --show-transformed-names -cvzf helm-diff-releases-linux-amd64.tar.gz helm-diff-releases-linux-amd64
-    - name: Upload windows archives
+      run: cd helm-diff-releases-linux-amd64 && /bin/tar -cvzf ../helm-diff-releases-linux-amd64.tar.gz .
       uses: actions/upload-artifact@v3
       with:
         name: helm-diff-releases-windows-amd64.tar.gz
